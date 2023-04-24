@@ -15,9 +15,19 @@ const Anecdote = ({anecdote}) => {
 }
 
 const AnecdoteList = () => {
-	const anecdotes = [...useSelector(state => state)]
+	const anecdotes = useSelector(state => {
+		const ordened = [...state.anecdotes]
+		ordened.sort((a,b) => b.votes - a.votes)
+		
+		if(state.filter === 'TOP'){
+			
+			return 	ordened.slice(0,3)
+		} if(state.filter === 'LESS') {
+			return(ordened.slice(-3))
+		}
+		return ordened})
   
-	anecdotes.sort((a,b) => b.votes - a.votes)
+	
 
 	return (
 		<ul>
